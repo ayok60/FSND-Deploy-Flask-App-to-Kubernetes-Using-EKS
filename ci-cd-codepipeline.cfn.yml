@@ -48,7 +48,7 @@ Parameters:
 
   CodeBuildDockerImage:
     Type: String
-    Default: aws/codebuild/docker:17.09.0
+    Default: aws/codebuild/standard:4.0
     Description: Default AWS CodeBuild Docker optimized image
     MinLength: 3
     MaxLength: 100
@@ -61,6 +61,7 @@ Parameters:
     MinLength: 3
     MaxLength: 100
     ConstraintDescription: You must enter a kubectl IAM role
+
 
 
 Metadata:
@@ -318,6 +319,7 @@ Resources:
             Value: !Ref EksClusterName
           - Name: EKS_KUBECTL_ROLE_ARN
             Value: !Sub arn:aws:iam::${AWS::AccountId}:role/${KubectlRoleName}
+        PrivilegedMode: true
       Name: !Ref AWS::StackName
       ServiceRole: !GetAtt CodeBuildServiceRole.Arn
     DependsOn: KubectlAssumeRoleCustomResource
